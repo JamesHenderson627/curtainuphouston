@@ -71,3 +71,59 @@ img {
  * YOUR CODE HERE
  */
 
+#header {
+    display: flex;
+    max-height: 100px;
+}
+
+#navbar {
+    text-align: right;
+    margin-left: 30%;
+}
+
+#navbar li {
+    display: inline-block;
+    padding: 10px;
+    border-right: 1px solid gray;
+}
+
+#logo {
+    height: 100px;
+    width: 150px;
+}
+
+#greeting {
+    padding: 1rem;
+}
+
+#greeting h3 {
+    margin: 0;
+}
+
+#skyline {
+    width: 100%;
+    height: 400px;
+}
+
+#geoSearch {
+    text-align: center;
+}
+
+#listAndMapContainer {
+    display: flex;
+}
+
+.theatreList {
+    list-style-type: decimal;
+}
+
+#map{
+    height: 400px;
+    width: 400px;
+    border: 1px solid gray;
+}
+
+
+
+
+

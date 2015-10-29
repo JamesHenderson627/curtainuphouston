@@ -6,7 +6,8 @@ var express = require('express'),
     compression = require('compression'),
     session = require('express-session'),
     csrf = require('csurf'),
-    override = require('method-override')
+    override = require('method-override'),
+    yelp = require ('node-yelp')
 
 function startServer() {
 
@@ -50,6 +51,47 @@ function startServer() {
             ).pipe(res)
         })
     }
+    app.get('/myYelp' , (req , res , next) =>{
+        var client = yelp.createClient({
+            oauth: {
+                "consumer_key": "PNUcozGKzI22fpJ2dmeGdg",
+                "consumer_secret": "Q2p1vfBnJ71EXTlXbp8ggeIjaXc",
+                "token": "fvRBKnpy6BvRIT4t7yUc7VGhocG4hIPi",
+                "token_secret": "47-cUNi1bBv2d4Fslo_968yoS3E"
+            }
+        })
+        var location = req.query.location||'houston'
+        var terms = req.query.terms||'community theatre'
+        console.log(location)
+        console.log(terms)
+        // try{
+                client.search({
+                  term: terms,
+                  location: location
+                }).then(function (data) {
+                    res.write(JSON.stringify(data))
+                    // res.write(req)
+                    res.end()
+                    // console.log(data)
+                })
+        //     else{
+        //         res.write(JSON.stringify({error:'missing params'}))
+        //         res.end()
+        //     }
+        // }
+        // catch(e){
+        //     res.write(JSON.stringify({error:'missing params'}))
+        //     res.end()
+        // }
+        
+        // res.write(typeof req.params)
+        // for (var i in req.query)
+        //     res.write(i+'\r\n')
+        //     // res.write(JSON.stringify())
+        //     res.end()
+
+    })
+    // request.write('s')
 
     // add your proxies here.
     //
