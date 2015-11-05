@@ -51,7 +51,8 @@ function startServer() {
             ).pipe(res)
         })
     }
-    app.get('/myYelp' , (req , res , next) =>{
+
+    app.get('/myYelp', (req , res , next) =>{
         var client = yelp.createClient({
             oauth: {
                 "consumer_key": "PNUcozGKzI22fpJ2dmeGdg",
@@ -61,7 +62,7 @@ function startServer() {
             }
         })
         var location = req.query.location||'houston'
-        var terms = req.query.terms||'community theatre'
+        var terms = req.query.term || 'community-theatre'
         console.log(location)
         console.log(terms)
         // try{

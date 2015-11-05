@@ -71,35 +71,65 @@ img {
  * YOUR CODE HERE
  */
 
+
+
 #header {
     display: flex;
     max-height: 100px;
-}
 
-#navbar {
-    text-align: right;
-    margin-left: 30%;
-}
+    #logo {
+        height: 100px;
+        width: 150px;
+    }
 
-#navbar li {
-    display: inline-block;
-    padding: 10px;
-    border-right: 1px solid gray;
-}
+    #greeting {
+        padding: 1rem;
 
-#logo {
-    height: 100px;
-    width: 150px;
-}
+        h3 {
+            margin: 0;
+        }
+    }
 
-#greeting {
-    padding: 1rem;
-}
+    #navbar {
+        text-align: right;
+        margin-left: 30%;
 
-#greeting h3 {
-    margin: 0;
-}
+        li {
+            display: inline-block;
+            padding: 10px;
+            border-right: 1px solid gray;
+            cursor: pointer;
+        }
 
+        #login:hover #loginBox {
+            opacity: 1;
+            transition: 1s;
+        }
+
+        #login, #logout {
+            border-right: none;
+
+            #loginBox {
+                text-align: center;
+                // border: 1px solid black;
+                width: 200px; 
+                position: absolute;
+                opacity: 0;
+                padding: 0px;
+                right: 1px;
+                bottom: 1px;
+            }
+
+            #loginBox input {
+                width: 100px;
+            }
+
+            #loginBox li {
+                border: none;
+            }
+        }
+    }
+}
 #skyline {
     width: 100%;
     height: 400px;
@@ -108,6 +138,17 @@ img {
 #geoSearch {
     text-align: center;
 }
+
+#geoSearch input {
+    margin: 10px;
+}
+
+#geoSearch #submit {
+    display: block;
+    margin: 0 auto;
+}
+
+/*================LIST VIEW===============*/
 
 #listAndMapContainer {
     display: flex;
@@ -123,6 +164,30 @@ img {
     border: 1px solid gray;
 }
 
+/*====================PROFILE VIEW==================*/
+#mainContainer{
+    margin: 0 auto;
+    min-height: 100%;
+    width: 800px;
+    border: 1px solid black;
+    border-radius: 20px;
+    text-align: center;
+
+    #infoHead div {
+        margin: 1rem;
+        
+        #theatreLogo {
+            border: 1px solid black;
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    #dateAndShows {
+        display: flex;
+        margin: 1rem;
+    }
+}
 
 
 

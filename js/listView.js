@@ -3,7 +3,10 @@ var React = require('react')
 import {Header} from "./homeView.js"
 
 var ListView = React.createClass({
-	componentDidMount: function() {
+	componentWillMount: function() {
+		window.listView = this
+		window.collection = this.props.theatreListInfo
+		window.google = google
 		console.log("rendering list ListView")
 		console.log(this)
 		var self = this
@@ -11,27 +14,46 @@ var ListView = React.createClass({
 		this.props.theatreListInfo.on('sync', updateStuff)
 	},
 
-	_getTheatreList: function(theatre) {
-		return (<SingleList theatreInfo={theatre} />)
+
+	_initMap: function() {
+		if (!this.props.theatreListInfo.region) return
+		var lat = this.props.theatreListInfo.region.center.latitude,
+	  		lng = this.props.theatreListInfo.region.center.longitude
+
+	  	var coordPairs = this.props.theatreListInfo.models.slice(0,10).map(
+	  		function(model){
+				var origCoords = model.get('location').coordinate
+				return {lat: origCoords.latitude, lng: origCoords.longitude}
+	  		})
+
+	  	setTimeout(function(){
+			var	map = new google.maps.Map(document.getElementById('map'), {
+			    center: {lat: lat, lng: lng},
+			    scrollwheel: false,
+			    zoom: 11,
+			})
+			coordPairs.forEach(function(pair) {
+				var newMarker = new google.maps.Marker({
+					map: map,
+					position: pair
+				})
+			})
+		}, 200)
 	},
 
-	// initMap: function() {
-	//   // Create a map object and specify the DOM element for display.
-	//   var map = new google.maps.Map(document.getElementById('map'), {
-	//     center: {lat: -34.397, lng: 150.644},
-	//     scrollwheel: false,
-	//     zoom: 8
-	//   });
-	// },
+	_getTheatreList: function(theatre) {
+		return (<SingleList theatreInfo={theatre} getCoords={this._initMap}/>)
+	},
 
 	render: function() {
-		var singleTheatre = this.props.theatreListInfo.models.slice(0, 10)
+		var theatreList = this.props.theatreListInfo.models.slice(0, 10)
+		this._initMap()
 		return(
 			<div>
 				<Header />
 				<div id="listAndMapContainer">
 					<ul className="theatreList">
-						{singleTheatre.map(this._getTheatreList)}
+						{theatreList.map(this._getTheatreList)}
 					</ul>
 					<div id="map">
 					</div>
