@@ -52,7 +52,7 @@ function startServer() {
         })
     }
 
-    app.get('/myYelp', (req , res , next) =>{
+    app.get('/myYelp', (req , res , next) => {
         var client = yelp.createClient({
             oauth: {
                 "consumer_key": "PNUcozGKzI22fpJ2dmeGdg",
@@ -61,8 +61,8 @@ function startServer() {
                 "token_secret": "47-cUNi1bBv2d4Fslo_968yoS3E"
             }
         })
-        var location = req.query.location||'houston'
-        var terms = req.query.term || 'community-theatre'
+        var location = req.query.location||"Houston",
+            terms = 'community theater'
         console.log(location)
         console.log(terms)
         // try{

@@ -31,6 +31,7 @@ import SignUpScreen from "./signUp.js"
 import ListView from "./listView.js"
 
 window.p = Parse
+var Profile = new Parse.Object.extend("Profile")
 
 //=========PARSE STUFF==============
 var APP_ID = 'eC3CnUDDFYQ9uCAlCHMTgURJ33XBlgbvW6rNMZxe',
@@ -51,51 +52,36 @@ var TheatreListCollection = Backbone.Collection.extend({
 	}
 })
 
-var VenueCollection = Backbone.Collection.extend({
-	url: "https://api.parse.com/1/classes/venues",
-
-	parseHeaders: {
-		"X-Parse-Application-Id": APP_ID,
-		"X-Parse-REST-API-Key": REST_KEY
-	},
-
-	model: VenueModel,
-
-	parse: function() {
-		console.log(responseData)
-		return responseData
-	}
-})
-
-//=====================MODELS====================
-var VenueModel = Backbone.Model.extend({
-	url: "https://api.parse.com/1/classes/venues",
-
-	parseHeaders: {
-		"X-Parse-Application-Id": APP_ID,
-		"X-Parse-REST-API-Key": REST_KEY
-	}
-})
 //===================BACKBONE ROUTER==================
 var TheatreRouter = Backbone.Router.extend({
 
 	routes: {
 		"logout": "logUserOut",
-		"profile": "showProfile",
+		"profile/home": "showProfile",
+		"about": "showAboutView",
 		"signup": "showSignUp",
 		"theatres/:location": "showTheatreList",
 		"*home": "showHomeView"
 	},
 
-	_createNewUser: function(username, password){
+	_createNewUser: function(username, password, company, address, city, state, zip, phone, web, snippet){
 		console.log(username)
 		var newUsr = new Parse.User()
-
-		newUsr.set('username', username)
-		newUsr.set('password', password)
+		newUsr.set({
+			'username': username,
+			'password': password,
+			'company': company,
+			'address': address,
+			'city': city,
+			'state': state,
+			'zip': zip,
+			'phone': phone,
+			'web': web,
+			'snippet': snippet
+		})
 		newUsr.signUp(null, {
-			success: function(user){
-				location.hash = 'profile'
+			success: function(){
+				location.hash = "profile/home"
 				alert("Hooray! Welcome to the community!")
 			},
 			fail: function(err){
@@ -111,7 +97,7 @@ var TheatreRouter = Backbone.Router.extend({
 	_logInUser: function(username, password) {
 		Parse.User.logIn(username, password, {
 			success: function() {
-				location.hash = "profile"
+				location.hash = "profile/home"
 			},
 			fail: function() {
 				alert("Incorrect username and/or password. Please try again.")
@@ -120,19 +106,23 @@ var TheatreRouter = Backbone.Router.extend({
 	},
 
 	logUserOut: function(){
-
 		Parse.User.logOut().then(function(){
 			location.hash = "home"
 		})
 	},
 
-	showHomeView: function() {
-		ReactDOM.render(<HomeView currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
+	showAboutView: function() {
+		ReactDOM.render(<HomeView aboutDisplay="block" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
+	},
 
+	showHomeView: function() {
+		console.log('routing home')
+		ReactDOM.render(<HomeView aboutDisplay="none" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
 	},
 
 	showProfile: function() {
-		ReactDOM.render(<ProfileView currentUser={this._user()} />,document.querySelector('#container'))
+		console.log("Fetching the profile")
+		ReactDOM.render(<ProfileView currentUser={this._user()}/>,document.querySelector('#container'))
 	},
 
 	showSignUp: function() {
@@ -141,15 +131,23 @@ var TheatreRouter = Backbone.Router.extend({
 
 	showTheatreList: function(inputLocation) {
 		console.log("Going in for the fetch")
-		this.tlc.fetch ({
-			url: this.tlc.url + "?location=" + inputLocation
-		})
+		var Users = Parse.Object.extend("User"),
+			theatreQuery = new Parse.Query(Users) 
+		$.when(
+			this.tlc.fetch ({
+				url: this.tlc.url + "?location=" + inputLocation
+			}),
+			theatreQuery.find({
+				success: function(results) {
+					console.log("got " + results.length + " theatres!")
+				}
+			})
+		)
 		ReactDOM.render(<ListView theatreListInfo={this.tlc} />,document.querySelector('#container'))
 	},
 
 	initialize: function() {
 		this.tlc = new TheatreListCollection()
-		this.vc = new VenueCollection()
 		console.log("starting things")
 		Backbone.history.start()
 	}

@@ -18,24 +18,39 @@ var ListView = React.createClass({
 	_initMap: function() {
 		if (!this.props.theatreListInfo.region) return
 		var lat = this.props.theatreListInfo.region.center.latitude,
-	  		lng = this.props.theatreListInfo.region.center.longitude
+	  		lng = this.props.theatreListInfo.region.center.longitude,
+	  		image = {
+			    url: "./images/yelp.jpg",
+			    scaledSize: new google.maps.Size(20, 20),
+			    origin: new google.maps.Point(0, 0),
+			    anchor: new google.maps.Point(0, 20)
+			  }
 
-	  	var coordPairs = this.props.theatreListInfo.models.slice(0,10).map(
+	  	var theatreDetails = this.props.theatreListInfo.models.slice(0,10).map(
 	  		function(model){
-				var origCoords = model.get('location').coordinate
-				return {lat: origCoords.latitude, lng: origCoords.longitude}
+				var origCoords = model.get('location').coordinate,
+					title = model.get('name')
+				return {title: title, coords: {lat: origCoords.latitude, lng: origCoords.longitude}}
 	  		})
 
 	  	setTimeout(function(){
 			var	map = new google.maps.Map(document.getElementById('map'), {
 			    center: {lat: lat, lng: lng},
 			    scrollwheel: false,
-			    zoom: 11,
+			    zoom: 12,
 			})
-			coordPairs.forEach(function(pair) {
+			theatreDetails.forEach(function(detail) {
 				var newMarker = new google.maps.Marker({
 					map: map,
-					position: pair
+					position: detail.coords,
+					icon: image,
+					title: detail.title
+				})
+				var infoWindow = new google.maps.InfoWindow({
+					content: detail.title
+				})
+				newMarker.addListener("click", function(){
+					infoWindow.open(map, newMarker)
 				})
 			})
 		}, 200)
