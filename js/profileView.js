@@ -8,16 +8,12 @@ var ProfileView = React.createClass({
 		console.log(this)
 	},
 
-	_handleLogOut: function() {
-		location.hash = "logout"
-	},
-
 	render: function() {
 		return(
 			<div>
 				<Header currentUser={this.props.currentUser}/>
 				<Background />
-				<MainContainer currentUser={this.props.currentUser}/>
+				<MainContainer profileInfo={this.props.profileInfo}/>
 			</div>
 			)
 	}
@@ -27,7 +23,7 @@ var MainContainer = React.createClass({
 	render: function() {
 		return(
 			<div id="mainContainer">
-				<PicAndInfo currentUser={this.props.currentUser}/>
+				<PicAndInfo profileInfo={this.props.profileInfo}/>
 				<DatesandShows />
 			</div>
 			)
@@ -38,8 +34,8 @@ var PicAndInfo = React.createClass({
 	render: function() {
 		return(
 			<div id="infoHead">
-				<Logo currentUser={this.props.currentUser}/>
-				<ProfileIntro currentUser={this.props.currentUser}/>
+				<Logo profileInfo={this.props.profileInfo}/>
+				<ProfileIntro profileInfo={this.props.profileInfo}/>
 			</div>
 			)
 	}
@@ -47,13 +43,14 @@ var PicAndInfo = React.createClass({
 
 var Logo = React.createClass({
 	render: function() {
-		var link = this.props.currentUser.get("web")
+		var link = this.props.profileInfo.get("web"),
+			linkDisplay = link.slice(11)
 		return(
 			<div>
 				<div id="theatreLogo">
 					<img src="http://d18mx3glitq1vd.cloudfront.net/wp-content/uploads/2013/08/your-logo-here.png"/>
 				</div>
-				<a id="theatreLink" href={link}>{link}</a>
+				<a id="theatreLink" href={link}>{linkDisplay}</a>
 			</div>
 			)
 	}
@@ -66,17 +63,18 @@ var ProfileIntro = React.createClass({
 	},
 
 	render: function() {
-		var name = this.props.currentUser.get("company"),
-			snippet = this.props.currentUser.get("snippet"),
-			address = this.props.currentUser.get("address"),
-			city = this.props.currentUser.get("city"),
-			state = this.props.currentUser.get("state"),
-			zip = this.props.currentUser.get("zip"),
-			phone = this.props.currentUser.get("phone")
+		var name = this.props.profileInfo.get("name"),
+			// snippet = this.props.profileInfo.get("snippet"),
+			// <p id="aboutMe">{snippet}</p>
+			address = this.props.profileInfo.get("address"),
+			city = this.props.profileInfo.get("city"),
+			state = this.props.profileInfo.get("state"),
+			zip = this.props.profileInfo.get("zip"),
+			phone = this.props.profileInfo.get("phone")
+			console.log(name)
 		return(
 			<div id="basicTheatreInfo">
 				<h3 id="name">{name}</h3>
-				<p id="aboutMe">{snippet}</p>
 				<p id="address">{address}<br/>{city}, {state} {zip}</p>
 				<p id="phone">{phone}</p>
 			</div>

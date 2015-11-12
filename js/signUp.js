@@ -8,7 +8,7 @@ var SignUpScreen = React.createClass({
 
 		return(
 			<div>
-				<Header />
+				<Header logInUser={this.props.logInUser}/>
 				<Background />
 				<SignUp sendUserData={this.props.sendUserData} />
 			</div>	
@@ -37,35 +37,67 @@ var SignUp = React.createClass({
 			web = this.refs.web.value,
 			snippet = this.refs.snippet.value
 		if (!username) {
-			alert("Please enter a username")
+			swal({
+				title: "Oops...!", 
+				text: "Looks like you didn't put a username", 
+				type: "error"
+			})
 			return
 		}
 		if (!password) {
-			alert("Please enter a password")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a password", 
+				type: "error"
+			})
 			return
 		}
 		if (!company) {
-			alert("Please create a company")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a company or venue", 
+				type: "error"
+			})
 			return
 		}
 		if (!address) {
-			alert("Please create a address")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a address", 
+				type: "error"
+			})
 			return
 		}
 		if (!city) {
-			alert("Please create a city")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a city", 
+				type: "error"
+			})
 			return
 		}
 		if (!state) {
-			alert("Please create a state")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a state", 
+				type: "error"
+			})
 			return
 		}
 		if (!zip) {
-			alert("Please create a zip")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a zip", 
+				type: "error"
+			})
 			return
 		}
 		if (!phone) {
-			alert("Please create a phone")
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a phone number", 
+				type: "error"
+			})
 			return
 		}
 		if (!web) {
@@ -80,7 +112,7 @@ var SignUp = React.createClass({
 	render: function() {
 		return(
 			<div id="signUpBox">
-					<h1>Sign Up!</h1>
+					<h2>Join Us!</h2>
 					<input type="text" placeholder="Your Username" ref="username"/>
 					<input type="password" placeholder="Your Password" ref="password"/>
 					<input type="text" id="name" placeholder="Company or venue"ref="company"></input>

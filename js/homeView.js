@@ -92,7 +92,9 @@ var LogInButton = React.createClass({
 
 	render: function() {
 		return(
-			<li id="login">Log In
+			<div className="login">
+				<input type="checkbox" id="login"></input>
+				<label htmlFor="login">Login</label>
 				<ul id="loginBox">
 					<li>
 						<input type="text" placeholder="Login" ref="username"></input>
@@ -101,27 +103,29 @@ var LogInButton = React.createClass({
 						<input type="password" placeholder="Password" ref="password"></input>
 					</li>
 					<li>
-						<button type="button" onClick={this._getUserData}>Log In</button>
+						<button type="button" id="signIn" onClick={this._getUserData}>Log In</button>
 					</li>
-					<li>Want to be involved?</li>
+					<li id="question">Want to be involved?</li>
 					<li>
-						<button type="button" onClick={this._signUp}>Sign Up</button>
+						<button type="button" id="signUp" onClick={this._signUp}>Sign Up</button>
 					</li>
 				</ul>
-			</li>
+			</div>
 			)
 	}
 })
 
 var LogOutButton = React.createClass({
 	_logUserOut: function() {
+		console.log(location.hash)
+		console.log("====logging out=====")
 		location.hash = "logout"
+		console.log(location.hash)
 	},
 
 	render: function() {
 		return(
-			<li id="logout" onClick={this._logUserOut}>Log Out
-			</li>
+			<li id="logout" onClick={this._logUserOut}>Log Out</li>
 			)
 	}
 })

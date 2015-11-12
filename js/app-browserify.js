@@ -7,9 +7,10 @@ var $ = require('jquery'),
 	Backbone = require('backbone'),
 	React = require('react'),
 	ReactDOM = require('react-dom'),
-	Parse = require('parse')
+	Parse = require('parse'),
+	swal = require('sweetalert')
 
-console.log("Javascript loaded!!")
+console.log("Javascript loaded!!!!")
 
 // import {React, Component, DOM} from 'react-resolver'
 
@@ -26,6 +27,7 @@ console.log("Javascript loaded!!")
     // new Router()
 // }
 import HomeView from "./homeView.js"
+import UserProfileView from "./userProfileView.js"
 import ProfileView from "./profileView.js"
 import SignUpScreen from "./signUp.js"
 import ListView from "./listView.js"
@@ -39,6 +41,9 @@ var APP_ID = 'eC3CnUDDFYQ9uCAlCHMTgURJ33XBlgbvW6rNMZxe',
 	REST_KEY = 'AWZOcYmy2jCYal4pGcUG7vZGaIxyWmFBvKGPkPsU'
 
 Parse.initialize(APP_ID, JS_KEY, REST_KEY)
+
+//=================GEOCODE API===========
+var geoAPI = "AIzaSyD9wF8QYzM1ShAP2JiGUz11xHujhsSfjrA"
 
 //===============BACKBONE COLLECTION=============
 var TheatreListCollection = Backbone.Collection.extend({
@@ -57,47 +62,143 @@ var TheatreRouter = Backbone.Router.extend({
 
 	routes: {
 		"logout": "logUserOut",
-		"profile/home": "showProfile",
+		"profile/:source/:name": "showProfile",
+		"userProfile": "showUserProfile",
 		"about": "showAboutView",
 		"signup": "showSignUp",
 		"theatres/:location": "showTheatreList",
 		"*home": "showHomeView"
 	},
 
-	_createNewUser: function(username, password, company, address, city, state, zip, phone, web, snippet){
-		console.log(username)
-		var newUsr = new Parse.User()
-		newUsr.set({
-			'username': username,
-			'password': password,
-			'company': company,
-			'address': address,
-			'city': city,
-			'state': state,
-			'zip': zip,
-			'phone': phone,
-			'web': web,
-			'snippet': snippet
-		})
-		newUsr.signUp(null, {
-			success: function(){
-				location.hash = "profile/home"
-				alert("Hooray! Welcome to the community!")
-			},
-			fail: function(err){
-				alert("Something went horribly wrong! Give it another go.")
-			}
+	collectionFetch: function(inputLocation) {
+		return this.tlc.fetch ({
+			url: this.tlc.url + "?location=" + inputLocation
 		})
 	},
 
-	_user: function(){
-		return Parse.User.current()
+	modelFetch: function(id) {
+		return this.tlc.fetch ({
+			url: this.tlc.url + "?id=" + id
+		})
+	},
+
+	combineData: function(yelpData, parseData) {
+	 	console.log(yelpData)
+		console.log(parseData)
+		// window.arguments = arguments
+
+		var self = this
+		this.model = Backbone.Model.extend({
+			defaults: {
+				name: "",
+				address: "",
+				city: "",
+				state: "",
+				zip: "",
+				latlng: "",
+				id: "",
+				source: ""
+			}
+		})
+
+		if(parseData)
+			parseData.forEach(function(data) {
+				var myParseResults = {
+					name: data.get("company"),
+					address: data.get("address"),
+					city: data.get("city"),
+					state: data.get("state"),
+					zip: data.get("zip"),
+					latlng: data.get("latlng"),
+					id: data.id,
+					web: data.get("web"),
+					phone: data.get("phone"),
+					source: function(){return "p"}
+				}
+				self.combinedArray.push(new self.model(myParseResults))
+			})
+		if(yelpData)
+			yelpData.forEach(function(business) {
+				var location = business.location.coordinate,
+					myYelpResults = {
+					name: business.name,
+					address: business.location.address[0],
+					city: business.location.city,
+					state: business.location.state_code,
+					zip: business.location.postal_code,
+					latlng: {lat: location.latitude, lng: location.longitude},
+					id: business.id,
+					web: business.url,
+					phone: business.display_phone,
+					source: function(){return "y"}
+				}
+				self.combinedArray.push(new self.model(myYelpResults))
+			})
+
+		console.log("=====combinedArray=====")
+		console.log(this.combinedArray)
+
+		return this.combinedArray
+	},
+
+	_createNewUser: function(username, password, company, address, city, state, zip, phone, web, snippet){
+		var self = this
+		self.doAjax(address, city, state, zip).done(function(responseData){
+			var loc = responseData.results[0].geometry.location,
+				 newUsr = new Parse.User()
+			newUsr.set({
+				'username': username,
+				'password': password,
+				'company': company,
+				'address': address,
+				'city': city,
+				'state': state,
+				'zip': zip,
+				'phone': phone,
+				'web': web,
+				'snippet': snippet,
+				'latlng': {lat:loc.lat,lng:loc.lng}
+			})
+			console.log(newUsr)
+			newUsr.signUp(null, {
+				success: function(){
+					swal({
+						title: "Hooray!", 
+						text: "Welcome to the community!", 
+						type: "success"
+					})
+					location.hash = "userProfile"
+				},
+				fail: function(err){
+					alert("Something went horribly wrong! Give it another go.")
+				}
+			})
+		})
+	},
+
+	doAjax: function(address, city, state, zip) {
+		var newAddress = address + " " + " " + city + " " +  state + " " + zip,
+			ajaxParams = {
+			url: "https://maps.googleapis.com/maps/api/geocode/json",
+			data: {
+				address: newAddress,
+				key: geoAPI
+			}
+		}
+
+		return $.ajax(ajaxParams)
+	},
+
+	getCenter: function(yelpData) {
+		var centerLoc = yelpData[0].region.center,
+			centerLoc = {lat: centerLoc.latitude, lng: centerLoc.longitude} 
+		return centerLoc
 	},
 
 	_logInUser: function(username, password) {
 		Parse.User.logIn(username, password, {
 			success: function() {
-				location.hash = "profile/home"
+				location.hash = "userProfile"
 			},
 			fail: function() {
 				alert("Incorrect username and/or password. Please try again.")
@@ -111,6 +212,29 @@ var TheatreRouter = Backbone.Router.extend({
 		})
 	},
 
+	parseFetch: function(userId) {
+		var Users = Parse.Object.extend("User"),
+			theatreQuery = new Parse.Query(Users)
+		if (userId){
+			theatreQuery.equalTo("objectId", userId)
+			return theatreQuery.find({
+				success: function(result) {
+					console.log("got the thing with the stuff")
+					console.log(result)
+				}
+			})
+		}
+		return theatreQuery.find({
+			success: function(results) {
+			console.log("got " + results.length + " theatres!")
+			}
+		})
+	},
+
+	_user: function(){
+		return Parse.User.current()
+	},
+
 	showAboutView: function() {
 		ReactDOM.render(<HomeView aboutDisplay="block" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
 	},
@@ -120,34 +244,56 @@ var TheatreRouter = Backbone.Router.extend({
 		ReactDOM.render(<HomeView aboutDisplay="none" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
 	},
 
-	showProfile: function() {
+	showProfile: function(source, id) {
+		console.log("Getting the profile")
+		var self = this
+		var deferred
+		if (source === "p") {
+			deferred = this.parseFetch(id)
+
+			deferred.then(function(parseData){
+				var newData = self.combineData(null, parseData)
+				ReactDOM.render(<ProfileView profileInfo={newData[0]} currentUser={self._user()}/>,document.querySelector('#container'))
+				})
+		}
+		if (source === "y") {
+			deferred = this.modelFetch(id)
+			
+			deferred.then(function(yelpData){
+				console.log(yelpData)
+				var newData = self.combineData(yelpData.businesses)
+				ReactDOM.render(<ProfileView profileInfo={newData[0]} currentUser={self._user()}/>,document.querySelector('#container'))
+				})
+		}
+	},
+
+	showUserProfile: function() {
 		console.log("Fetching the profile")
-		ReactDOM.render(<ProfileView currentUser={this._user()}/>,document.querySelector('#container'))
+		ReactDOM.render(<UserProfileView currentUser={this._user()}/>,document.querySelector('#container'))
 	},
 
 	showSignUp: function() {
-		ReactDOM.render(<SignUpScreen sendUserData={this._createNewUser} />,document.querySelector('#container'))
+		ReactDOM.render(<SignUpScreen sendUserData={this._createNewUser.bind(this)} logInUser={this._logInUser}/>,document.querySelector('#container'))
 	},
 
 	showTheatreList: function(inputLocation) {
 		console.log("Going in for the fetch")
-		var Users = Parse.Object.extend("User"),
-			theatreQuery = new Parse.Query(Users) 
+		var self = this
 		$.when(
-			this.tlc.fetch ({
-				url: this.tlc.url + "?location=" + inputLocation
-			}),
-			theatreQuery.find({
-				success: function(results) {
-					console.log("got " + results.length + " theatres!")
-				}
-			})
-		)
-		ReactDOM.render(<ListView theatreListInfo={this.tlc} />,document.querySelector('#container'))
+			this.collectionFetch(inputLocation),
+			this.parseFetch()
+		).then(function(yelpData, parseData){
+			console.log(yelpData)
+			console.log(parseData)
+			var newData = self.combineData(yelpData[0].businesses, parseData._result[0]),
+				centerLoc = self.getCenter(yelpData)
+				ReactDOM.render(<ListView center={centerLoc} theatreListInfo={newData} logInUser={self._logInUser}  />,document.querySelector('#container'))
+		})
 	},
 
 	initialize: function() {
 		this.tlc = new TheatreListCollection()
+		this.combinedArray = []
 		console.log("starting things")
 		Backbone.history.start()
 	}

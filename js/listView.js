@@ -1,71 +1,70 @@
 var React = require('react')
 
 import {Header} from "./homeView.js"
+import {Background} from "./signUp.js"
 
 var ListView = React.createClass({
+
 	componentWillMount: function() {
-		window.listView = this
-		window.collection = this.props.theatreListInfo
-		window.google = google
 		console.log("rendering list ListView")
 		console.log(this)
-		var self = this
-		var updateStuff = function(){self.forceUpdate()}
-		this.props.theatreListInfo.on('sync', updateStuff)
+		this.forceUpdate()
+		// var updateStuff = function(){self.forceUpdate()}
 	},
 
+	componentWillUpdate: function() {
+		this._initMap()	
+	},
+
+	_getTheatreList: function(theatre) {
+		return (<SingleList theatreInfo={theatre} />)
+	},
 
 	_initMap: function() {
-		if (!this.props.theatreListInfo.region) return
-		var lat = this.props.theatreListInfo.region.center.latitude,
-	  		lng = this.props.theatreListInfo.region.center.longitude,
-	  		image = {
-			    url: "./images/yelp.jpg",
-			    scaledSize: new google.maps.Size(20, 20),
-			    origin: new google.maps.Point(0, 0),
-			    anchor: new google.maps.Point(0, 20)
-			  }
+			console.log("----initing map-----")
+			console.log(this.props)
+			if (!this.props.center) return
+			var center = this.props.center,
+		  		image = {
+				    url: "./images/masks.jpg",
+				    scaledSize: new google.maps.Size(50, 50),
+				    origin: new google.maps.Point(0, 0),
+				    anchor: new google.maps.Point(0, 20)
+				  }
 
-	  	var theatreDetails = this.props.theatreListInfo.models.slice(0,10).map(
-	  		function(model){
-				var origCoords = model.get('location').coordinate,
-					title = model.get('name')
-				return {title: title, coords: {lat: origCoords.latitude, lng: origCoords.longitude}}
-	  		})
-
-	  	setTimeout(function(){
 			var	map = new google.maps.Map(document.getElementById('map'), {
-			    center: {lat: lat, lng: lng},
+			    center: center,
 			    scrollwheel: false,
-			    zoom: 12,
+			    zoom: 12
 			})
+
+
+			var theatreDetails = this.props.theatreListInfo.slice(0,10)
+			console.log(theatreDetails)
+
 			theatreDetails.forEach(function(detail) {
 				var newMarker = new google.maps.Marker({
 					map: map,
-					position: detail.coords,
+					position: detail.get("latlng"),
 					icon: image,
-					title: detail.title
+					title: detail.get("name")
 				})
 				var infoWindow = new google.maps.InfoWindow({
-					content: detail.title
+					content: detail.get("name")
 				})
 				newMarker.addListener("click", function(){
 					infoWindow.open(map, newMarker)
 				})
-			})
-		}, 200)
-	},
-
-	_getTheatreList: function(theatre) {
-		return (<SingleList theatreInfo={theatre} getCoords={this._initMap}/>)
-	},
+			})	
+		},
 
 	render: function() {
-		var theatreList = this.props.theatreListInfo.models.slice(0, 10)
-		this._initMap()
+		var theatreList = this.props.theatreListInfo.slice(0, 10)
+		// this._initMap()
 		return(
 			<div>
-				<Header />
+				<Header logInUser={this.props.logInUser}/>
+				<Background />
 				<div id="listAndMapContainer">
 					<ul className="theatreList">
 						{theatreList.map(this._getTheatreList)}
@@ -79,19 +78,26 @@ var ListView = React.createClass({
 })
 
 var SingleList = React.createClass({
-	componentDidMount: function(){ 
-		console.log(this)
+	// componentDidMount: function(){ 
+	// 	console.log(this)
+	// },
+	
+	_goToProfile: function(source, id) {
+		var id = this.props.theatreInfo.get("id"),
+			source = this.props.theatreInfo.attributes.source()
+		location.hash = "profile/" + source + "/" + id
+		
 	},
 
 	render: function() {
 		var name = this.props.theatreInfo.get("name"),
-			address = this.props.theatreInfo.attributes.location.address[0],
-			city = this.props.theatreInfo.attributes.location.city,
-			state = this.props.theatreInfo.attributes.location.state_code,
-			zip = this.props.theatreInfo.attributes.location.postal_code
+			address = this.props.theatreInfo.get("address"),
+			city = this.props.theatreInfo.get("city"),
+			state = this.props.theatreInfo.get("state"),
+			zip = this.props.theatreInfo.get("zip")
 		return(
 			<li>
-				<h5>{name}</h5>
+				<h5 id="theatreName" onClick={this._goToProfile}>{name}</h5>
 				<p>{address}<br/>{city}, {state} {zip}</p>
 			</li>
 			)

@@ -52,29 +52,41 @@ function startServer() {
         })
     }
 
-    app.get('/myYelp', (req , res , next) => {
-        var client = yelp.createClient({
-            oauth: {
-                "consumer_key": "PNUcozGKzI22fpJ2dmeGdg",
-                "consumer_secret": "Q2p1vfBnJ71EXTlXbp8ggeIjaXc",
-                "token": "fvRBKnpy6BvRIT4t7yUc7VGhocG4hIPi",
-                "token_secret": "47-cUNi1bBv2d4Fslo_968yoS3E"
-            }
-        })
+    var client = yelp.createClient({
+        oauth: {
+            "consumer_key": "PNUcozGKzI22fpJ2dmeGdg",
+            "consumer_secret": "Q2p1vfBnJ71EXTlXbp8ggeIjaXc",
+            "token": "fvRBKnpy6BvRIT4t7yUc7VGhocG4hIPi",
+            "token_secret": "47-cUNi1bBv2d4Fslo_968yoS3E"
+        }
+    })
+    // app.get('/myYelp/business', (req , res) => {
+
+    // })
+    app.get('/myYelp', (req , res) => {
         var location = req.query.location||"Houston",
-            terms = 'community theater'
+            terms = 'community theater',
+            limit = req.query.limit;
         console.log(location)
         console.log(terms)
-        // try{
-                client.search({
-                  term: terms,
-                  location: location
-                }).then(function (data) {
-                    res.write(JSON.stringify(data))
-                    // res.write(req)
-                    res.end()
-                    // console.log(data)
-                })
+
+        if(req.query.id){
+            client.business(req.query.id,{cc:'US'}).then(function (data) {
+                res.write(JSON.stringify({businesses:[data]}))
+                res.end()
+            })
+        }
+        else{
+            client.search({
+              term: terms,
+              location: location,
+              limit:limit
+            }).then(function (data) {
+                data.qty = data.businesses.length;
+                res.write(JSON.stringify(data))
+                res.end()
+            })
+        }
         //     else{
         //         res.write(JSON.stringify({error:'missing params'}))
         //         res.end()
