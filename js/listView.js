@@ -89,6 +89,10 @@ var SingleList = React.createClass({
 		
 	},
 
+	nextPage: function() {
+		
+	}
+
 	render: function() {
 		var name = this.props.theatreInfo.get("name"),
 			address = this.props.theatreInfo.get("address"),
@@ -96,10 +100,13 @@ var SingleList = React.createClass({
 			state = this.props.theatreInfo.get("state"),
 			zip = this.props.theatreInfo.get("zip")
 		return(
-			<li>
-				<h5 id="theatreName" onClick={this._goToProfile}>{name}</h5>
-				<p>{address}<br/>{city}, {state} {zip}</p>
-			</li>
+			<div>
+				<li>
+					<h5 id="theatreName" onClick={this._goToProfile}>{name}</h5>
+					<p>{address}<br/>{city}, {state} {zip}</p>
+				</li>
+				<p id="nextPage" onClick={this.nextPage}>More</p>
+			</div>
 			)
 	}
 })
