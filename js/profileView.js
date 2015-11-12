@@ -48,7 +48,7 @@ var Logo = React.createClass({
 		return(
 			<div>
 				<div id="theatreLogo">
-					<img src="http://d18mx3glitq1vd.cloudfront.net/wp-content/uploads/2013/08/your-logo-here.png"/>
+					<img src="./images/emptyPic.jpg"/>
 				</div>
 				<a id="theatreLink" href={link}>{linkDisplay}</a>
 			</div>
@@ -64,8 +64,7 @@ var ProfileIntro = React.createClass({
 
 	render: function() {
 		var name = this.props.profileInfo.get("name"),
-			// snippet = this.props.profileInfo.get("snippet"),
-			// <p id="aboutMe">{snippet}</p>
+			snippet = this.props.profileInfo.get("snippet"),
 			address = this.props.profileInfo.get("address"),
 			city = this.props.profileInfo.get("city"),
 			state = this.props.profileInfo.get("state"),
@@ -75,6 +74,7 @@ var ProfileIntro = React.createClass({
 		return(
 			<div id="basicTheatreInfo">
 				<h3 id="name">{name}</h3>
+				<p id="aboutMe">{snippet}</p>
 				<p id="address">{address}<br/>{city}, {state} {zip}</p>
 				<p id="phone">{phone}</p>
 			</div>

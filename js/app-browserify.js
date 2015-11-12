@@ -45,6 +45,9 @@ Parse.initialize(APP_ID, JS_KEY, REST_KEY)
 //=================GEOCODE API===========
 var geoAPI = "AIzaSyD9wF8QYzM1ShAP2JiGUz11xHujhsSfjrA"
 
+//==================GEOLOCATION API==============
+var geolacationKey = "AIzaSyAw1n_6rFDHoDwd5pCi20JgeuIq-a9c3x0"
+
 //===============BACKBONE COLLECTION=============
 var TheatreListCollection = Backbone.Collection.extend({
 	url: "/myYelp",
@@ -112,6 +115,7 @@ var TheatreRouter = Backbone.Router.extend({
 					latlng: data.get("latlng"),
 					id: data.id,
 					web: data.get("web"),
+					snippet: data.get("snippet"),
 					phone: data.get("phone"),
 					source: function(){return "p"}
 				}
@@ -129,6 +133,7 @@ var TheatreRouter = Backbone.Router.extend({
 					latlng: {lat: location.latitude, lng: location.longitude},
 					id: business.id,
 					web: business.url,
+					snippet: business.snippet_text,
 					phone: business.display_phone,
 					source: function(){return "y"}
 				}
@@ -141,15 +146,16 @@ var TheatreRouter = Backbone.Router.extend({
 		return this.combinedArray
 	},
 
-	_createNewUser: function(username, password, company, address, city, state, zip, phone, web, snippet){
+	_createNewUser: function(username, password, company, email, address, city, state, zip, phone, web, snippet){
 		var self = this
-		self.doAjax(address, city, state, zip).done(function(responseData){
+		self.doGeocodeAjax(address, city, state, zip).done(function(responseData){
 			var loc = responseData.results[0].geometry.location,
 				 newUsr = new Parse.User()
 			newUsr.set({
 				'username': username,
 				'password': password,
 				'company': company,
+				'email': email,
 				'address': address,
 				'city': city,
 				'state': state,
@@ -176,7 +182,7 @@ var TheatreRouter = Backbone.Router.extend({
 		})
 	},
 
-	doAjax: function(address, city, state, zip) {
+	doGeocodeAjax: function(address, city, state, zip) {
 		var newAddress = address + " " + " " + city + " " +  state + " " + zip,
 			ajaxParams = {
 			url: "https://maps.googleapis.com/maps/api/geocode/json",
@@ -188,6 +194,10 @@ var TheatreRouter = Backbone.Router.extend({
 
 		return $.ajax(ajaxParams)
 	},
+
+	// doGeolocationAjax: function() {
+		
+	// },
 
 	getCenter: function(yelpData) {
 		var centerLoc = yelpData[0].region.center,

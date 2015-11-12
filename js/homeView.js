@@ -22,7 +22,7 @@ var Header = React.createClass({
 			<div id="header">
 				<img id="logo" src='./images/masks.jpg' />
 				<div id="greeting">
-					<h3>Curtain Up Houston</h3>
+					<h3>Curtain Up Houston!</h3>
 					<p>Connecting Houston to it's community theatres since just now.</p>
 				</div>
 				<NavBar logInUser={this.props.logInUser} currentUser={this.props.currentUser} />
@@ -48,7 +48,7 @@ var NavBar = React.createClass({
 	},
 
 	_goToProfile: function() {
-		location.hash = "profile/home"
+		location.hash = "userProfile"
 	},
 
 	_goAbout: function() {
@@ -107,7 +107,7 @@ var LogInButton = React.createClass({
 					<li>
 						<button type="button" id="signIn" onClick={this._getUserData}>Log In</button>
 					</li>
-					<li id="question">Want to be involved?</li>
+					<p id="question">Want to be involved?</p>
 					<li>
 						<button type="button" id="signUp" onClick={this._signUp}>Sign Up</button>
 					</li>
@@ -168,7 +168,7 @@ var Body = React.createClass({
 	render: function() {
 		return (
 			<div id="geoSearch">
-				<h5>Shall we begin?</h5>
+				<h5>Locate Theatres</h5>
 				<input type="text" id="zip" onKeyDown={this._getTheatreCollection} placeholder="Zip Code"></input>
 			</div>
 			)
@@ -178,3 +178,6 @@ var Body = React.createClass({
 export default HomeView
 export {Header}
 export {Skyline}
+
+// <p>Or</p>
+// <button type="button" id="geoLocate">Use Current Location</button>

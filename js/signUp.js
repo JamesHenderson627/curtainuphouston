@@ -29,6 +29,7 @@ var SignUp = React.createClass({
 		var username = this.refs.username.value,
 			password = this.refs.password.value,
 			company = this.refs.company.value,
+			email = this.refs.email.value,
 			address = this.refs.address.value,
 			city = this.refs.city.value,
 			state = this.refs.state.value,
@@ -56,6 +57,14 @@ var SignUp = React.createClass({
 			swal({
 				title: "Oops...!", 
 				text: "Look like you didn't put a company or venue", 
+				type: "error"
+			})
+			return
+		}
+		if (!email) {
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a email or venue", 
 				type: "error"
 			})
 			return
@@ -101,27 +110,38 @@ var SignUp = React.createClass({
 			return
 		}
 		if (!web) {
-			web = null
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't put a web address", 
+				type: "error"
+			})
+			return
 		}
 		if (!snippet) {
-			snippet = null
+			swal({
+				title: "Oops...!", 
+				text: "Look like you didn't tell us about yourself", 
+				type: "error"
+			})
+			return
 		}
-		this.props.sendUserData(username, password, company, address, city, state, zip, phone, web, snippet)
+		this.props.sendUserData(username, password, company, email, address, city, state, zip, phone, web, snippet)
 	},
 
 	render: function() {
 		return(
 			<div id="signUpBox">
-					<h2>Join Us!</h2>
+					<h4 id="join">Join the community!</h4>
 					<input type="text" placeholder="Your Username" ref="username"/>
 					<input type="password" placeholder="Your Password" ref="password"/>
 					<input type="text" id="name" placeholder="Company or venue"ref="company"></input>
+					<input type="text" placeholder="Email" ref="email"/>
 					<input type="text" id="address" placeholder="Address"ref="address"></input>
 					<input type="text" id="city" placeholder="City"ref="city"></input>
 					<input type="text" id="state" placeholder="State"ref="state"></input>
 					<input type="text" id="zip" placeholder="Zip Code"ref="zip"></input>
 					<input type="tel" id="phone" placeholder="Phone Number" ref = "phone"></input>
-					<input type="text" id="siteLink" placeholder="Website"ref="web"></input>
+					<input type="text" id="siteLink" placeholder="www.yoursite.com"ref="web"></input>
 					<textarea type="text" id="snippet" placeholder="Something about yourself"ref="snippet"></textarea>
 					<button id="signUp" onClick={this._getNewUserData}>Create User</button>
 				</div>

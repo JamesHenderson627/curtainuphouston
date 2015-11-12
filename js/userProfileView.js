@@ -48,7 +48,7 @@ var Logo = React.createClass({
 		return(
 			<div>
 				<div id="theatreLogo">
-					<img src="http://d18mx3glitq1vd.cloudfront.net/wp-content/uploads/2013/08/your-logo-here.png"/>
+					<img src="./images/emptyPic.jpg"/>
 				</div>
 				<a id="theatreLink" href={link}>{linkDisplay}</a>
 			</div>

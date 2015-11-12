@@ -26,7 +26,7 @@ var ListView = React.createClass({
 			if (!this.props.center) return
 			var center = this.props.center,
 		  		image = {
-				    url: "./images/masks.jpg",
+				    url: "./images/shakes.png",
 				    scaledSize: new google.maps.Size(50, 50),
 				    origin: new google.maps.Point(0, 0),
 				    anchor: new google.maps.Point(0, 20)
@@ -35,7 +35,7 @@ var ListView = React.createClass({
 			var	map = new google.maps.Map(document.getElementById('map'), {
 			    center: center,
 			    scrollwheel: false,
-			    zoom: 12
+			    zoom: 13
 			})
 
 
@@ -69,7 +69,7 @@ var ListView = React.createClass({
 					<ul className="theatreList">
 						{theatreList.map(this._getTheatreList)}
 					</ul>
-					<div>
+					<div id="mapContainer">
 						<div id="map"></div>
 					</div>
 				</div>
