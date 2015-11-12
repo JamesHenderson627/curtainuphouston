@@ -86,7 +86,7 @@ var TheatreRouter = Backbone.Router.extend({
 	 	console.log(yelpData)
 		console.log(parseData)
 		// window.arguments = arguments
-
+		this.combinedArray=[]
 		var self = this
 		this.model = Backbone.Model.extend({
 			defaults: {

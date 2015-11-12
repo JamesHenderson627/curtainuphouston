@@ -66,7 +66,7 @@ function startServer() {
     app.get('/myYelp', (req , res) => {
         var location = req.query.location||"Houston",
             terms = 'community theater',
-            limit = req.query.limit;
+            limit = req.query.limit||10;
         console.log(location)
         console.log(terms)
 

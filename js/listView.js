@@ -85,13 +85,8 @@ var SingleList = React.createClass({
 	_goToProfile: function(source, id) {
 		var id = this.props.theatreInfo.get("id"),
 			source = this.props.theatreInfo.attributes.source()
-		location.hash = "profile/" + source + "/" + id
-		
+		location.hash = "profile/" + source + "/" + id	
 	},
-
-	nextPage: function() {
-		
-	}
 
 	render: function() {
 		var name = this.props.theatreInfo.get("name"),
@@ -100,13 +95,10 @@ var SingleList = React.createClass({
 			state = this.props.theatreInfo.get("state"),
 			zip = this.props.theatreInfo.get("zip")
 		return(
-			<div>
-				<li>
-					<h5 id="theatreName" onClick={this._goToProfile}>{name}</h5>
-					<p>{address}<br/>{city}, {state} {zip}</p>
-				</li>
-				<p id="nextPage" onClick={this.nextPage}>More</p>
-			</div>
+			<li>
+				<h5 id="theatreName" onClick={this._goToProfile}>{name}</h5>
+				<p>{address}<br/>{city}, {state} {zip}</p>
+			</li>
 			)
 	}
 })
