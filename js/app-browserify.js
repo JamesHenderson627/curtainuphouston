@@ -43,10 +43,10 @@ var APP_ID = 'eC3CnUDDFYQ9uCAlCHMTgURJ33XBlgbvW6rNMZxe',
 Parse.initialize(APP_ID, JS_KEY, REST_KEY)
 
 //=================GEOCODE API===========
-var geoAPI = "AIzaSyD9wF8QYzM1ShAP2JiGUz11xHujhsSfjrA"
+var geocodeApi = "AIzaSyD9wF8QYzM1ShAP2JiGUz11xHujhsSfjrA"
 
 //==================GEOLOCATION API==============
-var geolacationKey = "AIzaSyAw1n_6rFDHoDwd5pCi20JgeuIq-a9c3x0"
+var geolocationKey = "AIzaSyAw1n_6rFDHoDwd5pCi20JgeuIq-a9c3x0"
 
 //===============BACKBONE COLLECTION=============
 var TheatreListCollection = Backbone.Collection.extend({
@@ -188,16 +188,23 @@ var TheatreRouter = Backbone.Router.extend({
 			url: "https://maps.googleapis.com/maps/api/geocode/json",
 			data: {
 				address: newAddress,
-				key: geoAPI
+				key: geocodeApi
 			}
 		}
 
 		return $.ajax(ajaxParams)
 	},
 
-	// doGeolocationAjax: function() {
-		
-	// },
+	getGeoLocation: function() {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var lat = position.coords.latitude,
+				lon = position.coords.longitude,
+            	latlon = {lat:lat,lng:lon}
+        	console.log(latlon)
+			location.hash = "theatres/" + lat+','+lon
+        	// return latlon
+		})	
+	},
 
 	getCenter: function(yelpData) {
 		var centerLoc = yelpData[0].region.center,
@@ -246,12 +253,12 @@ var TheatreRouter = Backbone.Router.extend({
 	},
 
 	showAboutView: function() {
-		ReactDOM.render(<HomeView aboutDisplay="block" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
+		ReactDOM.render(<HomeView aboutDisplay="block" currentUser={this._user()} logInUser={this._logInUser} getGeoLocation={this.getGeoLocation} />,document.querySelector('#container'))
 	},
 
 	showHomeView: function() {
 		console.log('routing home')
-		ReactDOM.render(<HomeView aboutDisplay="none" currentUser={this._user()} logInUser={this._logInUser} />,document.querySelector('#container'))
+		ReactDOM.render(<HomeView aboutDisplay="none" currentUser={this._user()} logInUser={this._logInUser} getGeoLocation={this.getGeoLocation}/>,document.querySelector('#container'))
 	},
 
 	showProfile: function(source, id) {

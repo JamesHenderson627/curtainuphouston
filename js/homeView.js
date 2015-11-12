@@ -10,7 +10,7 @@ var HomeView = React.createClass({
 			<div>
 				<Header about={this.props.showAboutView} logInUser={this.props.logInUser} currentUser={this.props.currentUser} />
 				<Skyline aboutDisplay={this.props.aboutDisplay}/>
-				<Body />
+				<Body getGeoLocation={this.props.getGeoLocation}/>
 			</div>
 			)
 	}
@@ -165,11 +165,20 @@ var Body = React.createClass({
 		}
 	},
 
+	getCurrentLocation: function(event) {
+		console.log("clicked!")
+		console.log(event)
+		// location.hash = "theatres/" + 
+		this.props.getGeoLocation()
+	},
+
 	render: function() {
 		return (
 			<div id="geoSearch">
 				<h5>Locate Theatres</h5>
 				<input type="text" id="zip" onKeyDown={this._getTheatreCollection} placeholder="Zip Code"></input>
+				<p>Or</p>
+				<button type="button" id="geoLocate" onClick={this.getCurrentLocation}>Use Current Location</button>
 			</div>
 			)
 	}
@@ -179,5 +188,3 @@ export default HomeView
 export {Header}
 export {Skyline}
 
-// <p>Or</p>
-// <button type="button" id="geoLocate">Use Current Location</button>
