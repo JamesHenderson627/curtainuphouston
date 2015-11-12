@@ -69,7 +69,8 @@ var ListView = React.createClass({
 					<ul className="theatreList">
 						{theatreList.map(this._getTheatreList)}
 					</ul>
-					<div id="map">
+					<div>
+						<div id="map"></div>
 					</div>
 				</div>
 			</div>

@@ -1013,6 +1013,7 @@ body {
 #header {
     display: flex;
     max-height: 100%;
+    position: relative;
 
     #logo {
         height: 150px;
@@ -1029,9 +1030,10 @@ body {
 
     #navbar {
         text-align: right;
-        margin-left: 20%;
-        max-width: 100%;
         padding: 0;
+        position: absolute;
+        right: 0;
+        margin: 1rem;
 
         li {
             display: inline-block;
@@ -1068,8 +1070,8 @@ body {
             position: absolute;
             display: none;
             padding: 0px;
-            right: 2rem;
-            top: 75px;
+            right: -10px;
+            top: 50px;
             z-index: 1;
 
             input {

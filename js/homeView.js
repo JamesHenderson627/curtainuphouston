@@ -69,12 +69,14 @@ var NavBar = React.createClass({
 			loginButton = <LogOutButton />
 		}
 		return(
-			<ul id="navbar">
-				<li id="home" onClick={this._goHome}>Home</li>
-				<li id="aboutUs" onClick={this._goAbout}>About</li>
-				{profileButton}
-				{loginButton}
-			</ul>
+			<div>
+				<ul id="navbar">
+					<li id="home" onClick={this._goHome}>Home</li>
+					<li id="aboutUs" onClick={this._goAbout}>About</li>
+					{profileButton}
+					{loginButton}
+				</ul>
+			</div>
 			)
 	}
 })
