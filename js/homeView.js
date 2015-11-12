@@ -22,7 +22,7 @@ var Header = React.createClass({
 			<div id="header">
 				<img id="logo" src='./images/masks.jpg' />
 				<div id="greeting">
-					<h3>Houston Theatre Quest</h3>
+					<h3>Curtain Up Houston</h3>
 					<p>Connecting Houston to it's community theatres since just now.</p>
 				</div>
 				<NavBar logInUser={this.props.logInUser} currentUser={this.props.currentUser} />
@@ -150,7 +150,7 @@ var About = React.createClass({
 		// console.log(this.props)
 		return(
 			<div style={{display: this.props.aboutDisplay}} id="aboutInfo">
-					<p>Welcome to Houston Theatre Quest! We believe that the community theatres of Houston should be easily accessible to the members of its community. Simply enter your location below and see how close you are to great theatre! If you are a company or playhouse we would love for you to conribute to this outreach by creating an account and adding your information to our growing database. Thanks for stopping by and enjoy the show!
+					<p>Welcome to Curtaion Up Houston! We believe that the community theatres of Houston should be easily accessible to the members of its community. Simply enter your location below and see how close you are to great theatre! If you are a company or playhouse we would love for you to conribute to this outreach by creating an account and adding your information to our growing database. Thanks for stopping by and enjoy the show!
 					</p>
 			</div>
 			)
