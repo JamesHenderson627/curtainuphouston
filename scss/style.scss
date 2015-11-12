@@ -1016,79 +1016,84 @@ body {
     position: relative;
 
     #logo {
-        height: 150px;
-        width: 150px;
+      flex: 1.5;
+      height: 150px;
+      width: 150px;
     }
 
     #greeting {
+        flex: 5;
         padding: 1rem;
 
         h3 {
             margin: 0;
         }
     }
-
-    #navbar {
-        text-align: right;
-        padding: 0;
-        position: absolute;
-        right: 0;
-        margin: 1rem;
-
-        li {
-            display: inline-block;
-            padding: 10px;
-            border-right: 1px solid gray;
-            cursor: pointer;
-        }
-
-        .login{
-            display: inline-block;
-        }
-
-        #login:checked ~ #loginBox {
-            display: block;
-        }
-
-        #logout {
-            border-right: none;
-        }
-
-        #login {
-            display: none;
-        }
-
-        #login + label {
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        #loginBox {
-            text-align: center;
-            /* border: 1px solid black;*/
-            width: 200px; 
+    
+    #navContainer{
+      
+        #navbar {
+            text-align: right;
+            padding: 0;
             position: absolute;
-            display: none;
-            padding: 0px;
-            right: -10px;
-            top: 50px;
-            z-index: 1;
-
-            input {
-                width: 100px;
-                padding: 7px;
-            }
+            right: 0;
+            margin: 1rem;
 
             li {
-                border: none;
+                display: inline-block;
+                padding: 10px;
+                border-right: 1px solid gray;
+                cursor: pointer;
             }
 
-            #question {
-                font-size: 20px;
+            .login{
+                display: inline-block;
             }
 
-            #signIn, #signUp {
-                // background-color: white;
+            #login:checked ~ #loginBox {
+                display: block;
+            }
+
+            #logout {
+                border-right: none;
+            }
+
+            #login {
+                display: none;
+            }
+
+            #login + label {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            #loginBox {
+                text-align: center;
+                /* border: 1px solid black;*/
+                width: 200px; 
+                position: absolute;
+                display: none;
+                padding: 0px;
+                right: -10px;
+                top: 50px;
+                z-index: 1;
+
+                input {
+                    width: 100px;
+                    padding: 7px;
+                }
+
+                li {
+                    border: none;
+                }
+
+                #question {
+                    font-size: 20px;
+                }
+
+                #signIn, #signUp {
+                    // background-color: white;
+                }
             }
         }
     }

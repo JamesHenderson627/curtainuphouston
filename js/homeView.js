@@ -69,7 +69,7 @@ var NavBar = React.createClass({
 			loginButton = <LogOutButton />
 		}
 		return(
-			<div>
+			<div id="navContainer">
 				<ul id="navbar">
 					<li id="home" onClick={this._goHome}>Home</li>
 					<li id="aboutUs" onClick={this._goAbout}>About</li>
