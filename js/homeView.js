@@ -172,8 +172,8 @@ var Body = React.createClass({
 	getCurrentLocation: function(event) {
 		console.log("clicked!")
 		console.log(document.querySelector('body'))
-		event.target.style.cursor = 'wait'
-		document.querySelector('body').style.cursor = 'wait'
+		event.target.style.cursor = "wait"
+		document.querySelector('body').style.cursor = "wait"
 		// location.hash = "theatres/" + 
 		this.props.getGeoLocation()
 	},
