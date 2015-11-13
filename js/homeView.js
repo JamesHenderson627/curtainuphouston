@@ -158,6 +158,10 @@ var About = React.createClass({
 })
 
 var Body = React.createClass({
+	// getInitialState: function(){
+	// 	return {spinner:false}
+	// },
+
 	_getTheatreCollection: function(event) {
 		if (event.keyCode === 13) {
 			// console.log(event)
@@ -167,7 +171,9 @@ var Body = React.createClass({
 
 	getCurrentLocation: function(event) {
 		console.log("clicked!")
-		console.log(event)
+		console.log(document.querySelector('body'))
+		event.target.style.cursor = 'wait'
+		document.querySelector('body').style.cursor = 'wait'
 		// location.hash = "theatres/" + 
 		this.props.getGeoLocation()
 	},

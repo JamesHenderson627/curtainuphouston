@@ -200,7 +200,8 @@ var TheatreRouter = Backbone.Router.extend({
 			var lat = position.coords.latitude,
 				lon = position.coords.longitude,
             	latlon = {lat:lat,lng:lon}
-        	console.log(latlon)
+        	console.log('normal curses!')
+        	document.querySelector('body').style.cursor = ''
 			location.hash = "theatres/" + lat+','+lon
         	// return latlon
 		})	
