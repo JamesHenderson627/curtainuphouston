@@ -1221,7 +1221,10 @@ body {
 
     #mapContainer{
         flex: 2;
-        position: relative;
+        position: fixed;
+        width: 40%;
+        height: 400px;
+        right: 15%;
 
         #map{
             height: 400px;

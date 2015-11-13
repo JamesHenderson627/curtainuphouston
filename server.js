@@ -74,8 +74,9 @@ function startServer() {
           term: terms,
           location: (ll?'':location),
           limit:limit,
-          ll:ll
+          ll:ll,
         })
+        
         if(req.query.id){
             client.business(req.query.id,{cc:'US'}).then(function (data) {
                 res.write(JSON.stringify({businesses:[data]}))
