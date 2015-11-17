@@ -65,19 +65,20 @@ function startServer() {
     // })32.7767,96.7970
     app.get('/myYelp', (req , res) => {
         var location = req.query.location||"Houston",
-            ll   = req.query.location.match(',')?req.query.location:undefined,
+            ll   = req.query.location?(req.query.location.match(',')?req.query.location:undefined):undefined,
             terms = 'community theater',
             limit = req.query.limit||10;
-        console.log(location)
-        console.log(terms)
-        console.log('=======',{
-          term: terms,
-          location: (ll?'':location),
-          limit:limit,
-          ll:ll,
-        })
+        // console.log(location)
+        // console.log(terms)
+        // console.log('=======',{
+        //   term: terms,
+        //   location: (ll?'':location),
+        //   limit:limit,
+        //   ll:ll
+        // })
         
         if(req.query.id){
+            console.log(1)
             client.business(req.query.id,{cc:'US'}).then(function (data) {
                 res.write(JSON.stringify({businesses:[data]}))
                 res.end()

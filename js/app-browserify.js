@@ -80,6 +80,7 @@ var TheatreRouter = Backbone.Router.extend({
 	},
 
 	modelFetch: function(id) {
+		console.log("Getting the model")
 		return this.tlc.fetch ({
 			url: this.tlc.url + "?id=" + id
 		})
