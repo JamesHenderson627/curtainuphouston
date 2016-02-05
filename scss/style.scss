@@ -1292,7 +1292,7 @@ body {
     }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
     #greeting p {
         font-size: 13px;
     }
@@ -1308,6 +1308,10 @@ body {
     #logo {
         max-height: 100px;
         max-width: 100px;
+    }
+
+    #infoContainer {
+        margin-top: -1rem;
     }
 }
 
