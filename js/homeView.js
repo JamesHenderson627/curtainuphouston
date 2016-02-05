@@ -23,7 +23,7 @@ var Header = React.createClass({
 				<img id="logo" src='./images/masks.jpg' />
 				<div id="greeting">
 					<h3>Curtain Up Houston!</h3>
-					<p>Connecting Houston to it's community theatres since just now.</p>
+					<p>Connecting Houston to it's community theatres.</p>
 				</div>
 				<NavBar logInUser={this.props.logInUser} currentUser={this.props.currentUser} />
 			</div>

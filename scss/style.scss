@@ -1292,9 +1292,25 @@ body {
     }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 420px) {
+    #greeting {
+        
+        h3 {
+            font-size: 35px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }
+
     #aboutInfo p {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    #home, #about, #login {
+        display: block;
+        border: none;
     }
 }
 
