@@ -149,7 +149,7 @@ var About = React.createClass({
 		// console.log(this.props)
 		return(
 			<div style={{display: this.props.aboutDisplay}} id="aboutInfo">
-					<p>Welcome to Curtaion Up Houston! We believe that the community theatres of Houston should be easily accessible to the members of its community. Simply enter your location below and see how close you are to great theatre! If you are a company or playhouse we would love for you to conribute to this outreach by creating an account and adding your information to our growing database. Thanks for stopping by and enjoy the show!
+					<p>Welcome to Curtain Up Houston! We believe that the community theatres of Houston should be easily accessible to the members of its community. Simply enter your location below and see how close you are to great theatre! If you are a company or playhouse we would love for you to conribute to this outreach by creating an account and adding your information to our growing database. Thanks for stopping by and enjoy the show!
 					</p>
 			</div>
 			)
