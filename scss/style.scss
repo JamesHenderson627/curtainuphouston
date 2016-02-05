@@ -1041,7 +1041,6 @@ body {
             text-align: right;
             padding: 0;
             position: absolute;
-            right: 0;
             margin: 1rem;
 
             li {
@@ -1313,19 +1312,12 @@ body {
     #infoContainer {
         margin-top: -1rem;
     }
+}
 
+@media screen and (min-width: 481px) {
     #navbar {
-        /*right: 0;*/
+        right: 0;
     }
-
-    /*#navbar li {
-        padding: 2px;
-        border: none;
-    }
-
-    #login+label {
-        padding: 0px;
-    }*/
 }
 
 
