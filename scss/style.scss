@@ -1293,15 +1293,15 @@ body {
 }
 
 @media screen and (max-width: 420px) {
-    h3 {
-            font-size: 35px;
+    #greeting p {
+            font-size: 13px;
     }
 
     #aboutInfo p {
-        font-size: 12px;
+        font-size: 11px;
     }
 
-    #home, #aboutUs, .login {
+    #home {
         display: block;
         border: none;
     }
