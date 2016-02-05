@@ -1129,7 +1129,7 @@ body {
         transform: translate(-50%,-50%);
         background-color: white;
         max-height: 75%;
-        width: 65%;
+        width: 68%;
         position: absolute;
         border-radius: 10px;
         border: 1px solid black;
@@ -1305,8 +1305,9 @@ body {
         font-size: 12px;
     }
 
-    #navbar li {
-        display: block;
+    #logo {
+        height: 100px;
+        width: 100px;
     }
 }
 
