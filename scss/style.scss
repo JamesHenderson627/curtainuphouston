@@ -1044,8 +1044,7 @@ body {
             margin: 1rem;
 
             li {
-                display: inline-block;
-                padding: 10px;
+                display: block;
                 cursor: pointer;
             }
 
@@ -1328,6 +1327,8 @@ body {
 
     #navbar li {
         border-right: 1px solid gray;
+        padding: 10px;
+        display: inline-block;
     }
 }
 
