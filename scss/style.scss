@@ -1046,6 +1046,7 @@ body {
             li {
                 list-style-type: none;
                 cursor: pointer;
+                border-bottom: 1px solid gray;
             }
 
             .login{
@@ -1309,10 +1310,6 @@ body {
 
     #infoContainer {
         margin-top: -1rem;
-    }
-
-    li {
-        border: none;
     }
 }
 
