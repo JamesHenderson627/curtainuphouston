@@ -1074,12 +1074,12 @@ body {
                 border-radius: 10px;
                 border: 1px solid white;
                 /* border: 1px solid black;*/
-                width: 200px; 
+                width: 125px; 
                 position: absolute;
                 display: none;
                 padding: 0px;
                 right: -3px;
-                top: 50px;
+                top: 90px;
                 z-index: 1;
 
                 input {
@@ -1313,10 +1313,6 @@ body {
     li {
         border: none;
     }
-
-    #loginBox {
-        width: 125px;
-    }
 }
 
 @media screen and (min-width: 481px) {
@@ -1332,6 +1328,11 @@ body {
 
     #login + label {
         padding: 10px;
+    }
+
+    #loginBox {
+        width: 200px;
+        top: 50px;
     }
 }
 
