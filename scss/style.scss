@@ -1044,7 +1044,7 @@ body {
             margin: 1rem;
 
             li {
-                /*display: block;*/
+                list-style-type: none;
                 cursor: pointer;
             }
 
@@ -1065,7 +1065,6 @@ body {
             }
 
             #login + label {
-                padding: 10px;
                 cursor: pointer;
             }
 
@@ -1329,6 +1328,10 @@ body {
         border-right: 1px solid gray;
         padding: 10px;
         display: inline-block;
+    }
+
+    #login + label {
+        padding: 10px;
     }
 }
 
