@@ -1046,7 +1046,6 @@ body {
             li {
                 list-style-type: none;
                 cursor: pointer;
-                border-bottom: 1px solid gray;
             }
 
             .login{
@@ -1307,6 +1306,10 @@ body {
     #infoContainer {
         margin-top: -1rem;
     }
+
+    #navbar li {
+        border-bottom: 1px solid gray;
+    }
 }
 
 @media screen and (min-width: 591px) {
@@ -1318,10 +1321,6 @@ body {
         border-right: 1px solid gray;
         padding: 10px;
         display: inline-block;
-    }
-
-    #home {
-        border-bottom: none;
     }
 
     #login + label {
