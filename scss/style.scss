@@ -1312,6 +1312,10 @@ body {
     #infoContainer {
         margin-top: -1rem;
     }
+
+    #navbar li {
+        border: none;
+    }
 }
 
 @media screen and (min-width: 481px) {
