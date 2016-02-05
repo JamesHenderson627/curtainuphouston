@@ -1079,7 +1079,7 @@ body {
                 display: none;
                 padding: 5px;
                 right: -3px;
-                top: 90px;
+                top: 50px;
                 z-index: 1;
 
                 input {
@@ -1314,6 +1314,10 @@ body {
     li {
         border: none;
     }
+
+    #loginBox {
+        top: 90px;
+    }
 }
 
 @media screen and (min-width: 591px) {
@@ -1329,10 +1333,6 @@ body {
 
     #login + label {
         padding: 10px;
-    }
-
-    #navbar > #loginBox {
-        top: 3rem;
     }
 }
 
