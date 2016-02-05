@@ -1200,17 +1200,15 @@ body {
 /*================LIST VIEW===============*/
 
 #listAndMapContainer {
-    display: flex;
     margin: 0 auto;
     background-color: white;
-    max-width: 70%;
+    max-width: 85%;
     border: 1px solid black;
     border-radius: 20px;
     position: relative;
 
     .theatreList {
         list-style-type: decimal;
-        flex: 1;
 
         #theatreName {
             cursor: pointer;
@@ -1218,8 +1216,7 @@ body {
     }
 
     #mapContainer{
-        flex: 2;
-        position: fixed;
+        position: absolute;
         width: 40%;
         height: 400px;
         right: 15%;
@@ -1228,7 +1225,6 @@ body {
             height: 400px;
             width: 80%;
             border: 1px solid gray;
-            position: absolute;
             top: 1rem;
             right: .5rem;
         }
@@ -1319,6 +1315,7 @@ body {
     }
 
     #navbar li {
+        border-bottom: none;
         border-right: 1px solid gray;
         padding: 10px;
         display: inline-block;
@@ -1327,6 +1324,31 @@ body {
     #login + label {
         padding: 10px;
     }
+
+    #listAndMapContainer {
+    display: flex;
+
+    .theatreList {
+        flex: 1;
+    }
+
+    #mapContainer{
+        flex: 2;
+        position: fixed;
+        width: 40%;
+        height: 400px;
+        right: 15%;
+
+        #map{
+            height: 400px;
+            width: 80%;
+            border: 1px solid gray;
+            position: absolute;
+            top: 1rem;
+            right: .5rem;
+        }
+    }
+}
 }
 
 
