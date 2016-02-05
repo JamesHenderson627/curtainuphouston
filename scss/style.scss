@@ -1315,10 +1315,13 @@ body {
     }
 
     #navbar li {
-        border-bottom: none;
         border-right: 1px solid gray;
         padding: 10px;
         display: inline-block;
+    }
+
+    #home {
+        border-bottom: none;
     }
 
     #login + label {
