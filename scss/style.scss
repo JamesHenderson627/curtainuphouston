@@ -1129,7 +1129,7 @@ body {
         transform: translate(-50%,-50%);
         background-color: white;
         max-height: 75%;
-        max-width: 50%;
+        max-width: 65%;
         position: absolute;
         border-radius: 10px;
         border: 1px solid black;
@@ -1295,10 +1295,6 @@ body {
 @media screen and (max-width: 420px) {
     #greeting p {
             font-size: 13px;
-    }
-
-    #infoContainer #aboutInfo {
-        width: 65%;
     }
 
     #aboutInfo p {
