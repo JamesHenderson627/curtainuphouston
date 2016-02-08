@@ -1259,12 +1259,16 @@ body {
 
     #basicTheatreInfo {
 
+        #aboutMe {
+            text-align: left;
+        }
+
         #address, #phone {
             width: 200px;
             display: inline-block;
             font-size: 13px;
             font-weight: bold;
-            text-align: left;
+            text-indent: 0;
         }
     }
 }
