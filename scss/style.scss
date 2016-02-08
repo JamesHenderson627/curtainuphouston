@@ -1004,13 +1004,16 @@ img {
 /**
  * YOUR CODE HERE
  */
+* {
+    text-indent: none;
+}
+
 *:focus {
     outline: none;
 }
 
 body {
     font-family: 'Quicksand', sans-serif;
-    text-indent: 0px;
 }
 
 
@@ -1261,7 +1264,6 @@ body {
     #basicTheatreInfo {
 
         #address, #phone {
-            text-indent: none;
             width: 200px;
             display: inline-block;
             font-size: 13px;
