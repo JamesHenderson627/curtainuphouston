@@ -1267,15 +1267,6 @@ body {
             font-size: 13px;
             font-weight: bold;
         }
-
-        #address {
-            float: left;
-            min-width: 50%;
-        }
-
-        #phone {
-            float: right;
-        }
     }
 }
 
@@ -1348,6 +1339,15 @@ body {
     
     #infoHead{
         display: flex;
+    }
+
+     #address {
+        float: left;
+        min-width: 50%;
+    }
+
+    #phone {
+        float: right;
     }
 }
 
